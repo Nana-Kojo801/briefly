@@ -1,0 +1,20 @@
+{
+  "projectName": "briefly",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "pnpm",
+  "addOnOptions": {},
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "eslint",
+    "clerk",
+    "convex",
+    "compiler",
+    "shadcn",
+    "start",
+    "tanstack-query"
+  ]
+}
