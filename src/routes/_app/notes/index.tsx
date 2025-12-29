@@ -4,7 +4,7 @@ import { NotesList } from './-components/notes-list'
 import { EmptyNotesState } from './-components/empty-notes-state'
 import { mockNotes } from './-mock-data'
 
-export const Route = createFileRoute('/notes/')({
+export const Route = createFileRoute('/_app/notes/')({
   component: NotesPage,
 })
 

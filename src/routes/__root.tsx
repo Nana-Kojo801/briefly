@@ -6,7 +6,6 @@ import {
 
 import ClerkProvider from '../integrations/clerk/provider'
 import ConvexProvider from '../integrations/convex/provider'
-import { AppLayout } from './-components/app-layout'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -36,8 +35,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
-
-  component: AppLayout,
   shellComponent: RootDocument,
 })
 

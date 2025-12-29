@@ -6,7 +6,7 @@ import { ThemePreview } from './-components/theme-preview'
 import { AboutBriefly } from './-components/about-briefly'
 import { exportFormats, appInfo, mockUser } from './-mock-data'
 
-export const Route = createFileRoute('/settings/')({
+export const Route = createFileRoute('/_app/settings/')({
   component: RouteComponent,
 })
 

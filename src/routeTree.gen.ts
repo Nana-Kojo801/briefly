@@ -9,104 +9,205 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as SettingsIndexRouteImport } from './routes/settings/index'
-import { Route as NotesIndexRouteImport } from './routes/notes/index'
-import { Route as NotesIdIndexRouteImport } from './routes/notes/$id/index'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
+import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
+import { Route as AppSettingsIndexRouteImport } from './routes/_app/settings/index'
+import { Route as AppNotesIndexRouteImport } from './routes/_app/notes/index'
+import { Route as AppNotesIdIndexRouteImport } from './routes/_app/notes/$id/index'
 
-const IndexRoute = IndexRouteImport.update({
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const SettingsIndexRoute = SettingsIndexRouteImport.update({
+const AuthSignUpRoute = AuthSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthSignInRoute = AuthSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AppSettingsIndexRoute = AppSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const NotesIndexRoute = NotesIndexRouteImport.update({
+const AppNotesIndexRoute = AppNotesIndexRouteImport.update({
   id: '/notes/',
   path: '/notes/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const NotesIdIndexRoute = NotesIdIndexRouteImport.update({
+const AppNotesIdIndexRoute = AppNotesIdIndexRouteImport.update({
   id: '/notes/$id/',
   path: '/notes/$id/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/notes': typeof NotesIndexRoute
-  '/settings': typeof SettingsIndexRoute
-  '/notes/$id': typeof NotesIdIndexRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/sign-up': typeof AuthSignUpRoute
+  '/': typeof AppIndexRoute
+  '/notes': typeof AppNotesIndexRoute
+  '/settings': typeof AppSettingsIndexRoute
+  '/notes/$id': typeof AppNotesIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/notes': typeof NotesIndexRoute
-  '/settings': typeof SettingsIndexRoute
-  '/notes/$id': typeof NotesIdIndexRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/sign-up': typeof AuthSignUpRoute
+  '/': typeof AppIndexRoute
+  '/notes': typeof AppNotesIndexRoute
+  '/settings': typeof AppSettingsIndexRoute
+  '/notes/$id': typeof AppNotesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/notes/': typeof NotesIndexRoute
-  '/settings/': typeof SettingsIndexRoute
-  '/notes/$id/': typeof NotesIdIndexRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_auth/sign-in': typeof AuthSignInRoute
+  '/_auth/sign-up': typeof AuthSignUpRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/notes/': typeof AppNotesIndexRoute
+  '/_app/settings/': typeof AppSettingsIndexRoute
+  '/_app/notes/$id/': typeof AppNotesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/notes' | '/settings' | '/notes/$id'
+  fullPaths:
+    | '/sign-in'
+    | '/sign-up'
+    | '/'
+    | '/notes'
+    | '/settings'
+    | '/notes/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/notes' | '/settings' | '/notes/$id'
-  id: '__root__' | '/' | '/notes/' | '/settings/' | '/notes/$id/'
+  to: '/sign-in' | '/sign-up' | '/' | '/notes' | '/settings' | '/notes/$id'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_auth'
+    | '/_auth/sign-in'
+    | '/_auth/sign-up'
+    | '/_app/'
+    | '/_app/notes/'
+    | '/_app/settings/'
+    | '/_app/notes/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  NotesIndexRoute: typeof NotesIndexRoute
-  SettingsIndexRoute: typeof SettingsIndexRoute
-  NotesIdIndexRoute: typeof NotesIdIndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/settings/': {
-      id: '/settings/'
+    '/_auth/sign-up': {
+      id: '/_auth/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof AuthSignUpRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/sign-in': {
+      id: '/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AuthSignInRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_app/settings/': {
+      id: '/_app/settings/'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof SettingsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppSettingsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/notes/': {
-      id: '/notes/'
+    '/_app/notes/': {
+      id: '/_app/notes/'
       path: '/notes'
       fullPath: '/notes'
-      preLoaderRoute: typeof NotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppNotesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/notes/$id/': {
-      id: '/notes/$id/'
+    '/_app/notes/$id/': {
+      id: '/_app/notes/$id/'
       path: '/notes/$id'
       fullPath: '/notes/$id'
-      preLoaderRoute: typeof NotesIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppNotesIdIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppNotesIndexRoute: typeof AppNotesIndexRoute
+  AppSettingsIndexRoute: typeof AppSettingsIndexRoute
+  AppNotesIdIndexRoute: typeof AppNotesIdIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppNotesIndexRoute: AppNotesIndexRoute,
+  AppSettingsIndexRoute: AppSettingsIndexRoute,
+  AppNotesIdIndexRoute: AppNotesIdIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
+interface AuthRouteRouteChildren {
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthSignInRoute: AuthSignInRoute,
+  AuthSignUpRoute: AuthSignUpRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  NotesIndexRoute: NotesIndexRoute,
-  SettingsIndexRoute: SettingsIndexRoute,
-  NotesIdIndexRoute: NotesIdIndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

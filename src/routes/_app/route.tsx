@@ -1,8 +1,12 @@
-import { Link, Outlet } from '@tanstack/react-router'
-import { BookOpen, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
+import { BookOpen, Settings } from 'lucide-react'
 
-export function AppLayout() {
+export const Route = createFileRoute('/_app')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   return (
     <div className="min-h-screen bg-background">
       {/* App Header */}
@@ -10,8 +14,8 @@ export function AppLayout() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <BookOpen className="h-5 w-5" />
@@ -21,9 +25,7 @@ export function AppLayout() {
             {/* Navigation */}
             <nav className="flex items-center gap-1">
               <Button variant="ghost" size="sm" asChild>
-                <Link to="/notes">
-                  Notes
-                </Link>
+                <Link to="/notes">Notes</Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/settings">

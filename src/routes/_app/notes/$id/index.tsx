@@ -5,7 +5,7 @@ import { TiptapEditor } from './-components/tiptap-editor'
 import { NoteActionBar } from './-components/note-action-bar'
 import { getNoteById } from './-mock-data'
 
-export const Route = createFileRoute('/notes/$id/')({
+export const Route = createFileRoute('/_app/notes/$id/')({
   component: RouteComponent,
 })
 

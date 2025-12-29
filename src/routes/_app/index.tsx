@@ -6,7 +6,7 @@ import { EmptyState } from './-components/empty-state'
 import { RecentNotes } from './-components/recent-notes'
 import { recentNotes } from './-mock-data'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/_app/')({ component: App })
 
 function App() {
   const [rawInput, setRawInput] = useState('')
