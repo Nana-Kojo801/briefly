@@ -1,12 +1,41 @@
 import { Button } from '@/components/ui/button'
+import { useUserStoreActions } from '@/stores/user-store'
+import { api } from '@convex/_generated/api'
+import { Navigate } from '@tanstack/react-router'
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
-import { BookOpen, Settings } from 'lucide-react'
+import { useConvex, useConvexAuth } from 'convex/react'
+import { BookOpen, Loader2, Settings } from 'lucide-react'
+import { useEffect } from 'react'
 
 export const Route = createFileRoute('/_app')({
-  component: RouteComponent,
+  component: AppLayout,
 })
 
-function RouteComponent() {
+function AppLayout() {
+  const { isLoading, isAuthenticated } = useConvexAuth()
+  const convex = useConvex()
+  const { setUser } = useUserStoreActions()
+
+  useEffect(() => {
+    const init = async () => {
+      if (!isLoading && isAuthenticated) {
+        const user = await convex.query(api.users.current)
+        setUser(user)
+      }
+    }
+    init()
+  }, [isLoading, isAuthenticated])
+
+  if (isLoading) {
+    return (
+      <div className="w-screen h-dvh grid place-content-center">
+        <Loader2 className="text-primary animate-spin size-11" />
+      </div>
+    )
+  }
+
+  if (!isLoading && !isAuthenticated) return <Navigate to="/sign-in" />
+
   return (
     <div className="min-h-screen bg-background">
       {/* App Header */}

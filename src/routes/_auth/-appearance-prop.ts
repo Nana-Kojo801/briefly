@@ -1,0 +1,35 @@
+const appearanceProp = {
+  elements: {
+    rootBox: '!w-full !shadow-none',
+    card: '!bg-transparent !shadow-none !border-0 !p-0 !m-0 !w-full',
+    cardBox: '!shadow-none !p-0 !m-0 !w-full',
+    main: '!p-0 !m-0 !w-full',
+    header: '!hidden',
+    headerTitle: '!hidden',
+    headerSubtitle: '!hidden',
+    socialButtons: '!p-0 !m-0 !w-full !flex !justify-center',
+    socialButtonsBlockButton: `
+                !w-full !h-11  !flex !items-center !justify-center !bg-secondary !border !border-input !text-secondary-foreground hover:!bg-secondary/80 !transition-all !duration-200 !ease-out !shadow-sm !rounded-xl
+              `,
+    socialButtonsBlockButtonText: '!font-medium !text-sm',
+    socialButtonsIconButton: '!hidden',
+    dividerRow: '!hidden',
+    dividerLine: '!hidden',
+    dividerText: '!hidden',
+    form: '!hidden',
+    formFieldInput: '!hidden',
+    formButtonPrimary: '!hidden',
+    footer: '!hidden',
+    footerAction: '!hidden',
+    footerActionLink: '!hidden',
+    footerActionText: '!hidden',
+    identityPreview: '!hidden',
+    formResendCodeLink: '!hidden',
+    otpCodeFieldInput: '!hidden',
+    formFieldRow: '!hidden',
+    formFieldLabel: '!hidden',
+    alternativeMethods: '!hidden',
+    alternativeMethodsBlockButton: '!hidden',
+  },
+}
+export default appearanceProp

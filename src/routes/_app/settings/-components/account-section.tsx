@@ -1,17 +1,11 @@
 import { User, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUser } from '@/stores/user-store'
 
-interface AccountSectionProps {
-  user: {
-    name: string
-    email: string
-    imageUrl?: string
-  }
-  onLogout: () => void
-}
 
-export function AccountSection({ user, onLogout }: AccountSectionProps) {
+export function AccountSection() {
+  const user = useUser()
   // Get initials from name for avatar fallback
   const getInitials = (name: string) => {
     return name
@@ -36,7 +30,7 @@ export function AccountSection({ user, onLogout }: AccountSectionProps) {
       {/* User Info Card */}
       <div className="flex items-center gap-4 py-4">
         <Avatar className="h-16 w-16">
-          <AvatarImage src={user.imageUrl} alt={user.name} />
+          <AvatarImage src={user.image} alt={user.name} />
           <AvatarFallback className="text-lg">
             {getInitials(user.name)}
           </AvatarFallback>
@@ -52,7 +46,7 @@ export function AccountSection({ user, onLogout }: AccountSectionProps) {
       <div className="pt-2">
         <Button 
           variant="outline" 
-          onClick={onLogout}
+          onClick={() => {}}
           className="gap-2"
         >
           <LogOut className="h-4 w-4" />

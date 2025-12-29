@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { GoogleSignInButton } from './-components/google-sign-in-button'
+import { SignIn } from '@clerk/clerk-react'
+import appearanceProp from './-appearance-prop'
 
 export const Route = createFileRoute('/_auth/sign-in')({
   component: SignInPage,
@@ -18,7 +19,7 @@ function SignInPage() {
         </div>
 
         {/* Google Sign In Button */}
-        <GoogleSignInButton />
+        <SignIn appearance={appearanceProp} fallbackRedirectUrl="/" />
 
         {/* Terms */}
         <p className="text-xs text-center text-muted-foreground">

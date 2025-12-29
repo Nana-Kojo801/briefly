@@ -4,14 +4,15 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 
-import ClerkProvider from '../integrations/clerk/provider'
-import ConvexProvider from '../integrations/convex/provider'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
+import { ConvexReactClient } from 'convex/react'
+import ConvexClerkProvider from '@/integrations/tanstack-convex-clerk/provider'
 
 interface MyRouterContext {
   queryClient: QueryClient
+  convex: ConvexReactClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
@@ -45,11 +46,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ClerkProvider>
-          <ConvexProvider>
-            {children}
-          </ConvexProvider>
-        </ClerkProvider>
+        <ConvexClerkProvider>
+          {children}
+        </ConvexClerkProvider>
         <Scripts />
       </body>
     </html>
