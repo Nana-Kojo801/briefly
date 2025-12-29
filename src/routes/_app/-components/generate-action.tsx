@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Sparkles, Loader2 } from 'lucide-react'
+import { generateText, Output, gateway } from 'ai'
+import systemPrompt from '@/lib/system-prompt'
+import { useConvex } from 'convex/react'
+import { z } from 'zod'
 
 interface GenerateActionProps {
   rawInput: string
@@ -9,18 +13,32 @@ interface GenerateActionProps {
 
 export function GenerateAction({ rawInput }: GenerateActionProps) {
   const navigate = useNavigate()
+  const convex = useConvex()
   const [isGenerating, setIsGenerating] = useState(false)
 
   const handleGenerate = async () => {
     if (!rawInput.trim()) return
 
     setIsGenerating(true)
-    
+
     // Simulate AI generation
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
+    try {
+      const output = await fetch('/api/ai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ rawInput }),
+      }).then((res) => res.json())
+      console.log(output)
+      setIsGenerating(false)
+    } catch (error) {
+      console.log(error)
+      setIsGenerating(false)
+    }
+
     // Navigate to editor with a mock ID
-    navigate({ to: '/editor/$id', params: { id: 'new-note-1' } })
+    // navigate({ to: '/notes/$id', params: { id: 'new-note-1' } })
   }
 
   const isDisabled = !rawInput.trim() || isGenerating
@@ -45,7 +63,7 @@ export function GenerateAction({ rawInput }: GenerateActionProps) {
           </>
         )}
       </Button>
-      
+
       {isGenerating && (
         <p className="text-sm text-muted-foreground animate-pulse">
           Transforming your notes into a clear explanation...

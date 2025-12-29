@@ -2,7 +2,7 @@ import React from 'react'
 import { ClerkProvider, useAuth } from '@clerk/clerk-react'
 import { ConvexProviderWithClerk } from 'convex/react-clerk'
 import { ConvexQueryClient } from '@convex-dev/react-query'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -16,6 +16,15 @@ if (!CONVEX_URL) {
   console.error('missing envar CONVEX_URL')
 }
 const convexQueryClient = new ConvexQueryClient(CONVEX_URL)
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      queryKeyHashFn: convexQueryClient.hashFn(),
+      queryFn: convexQueryClient.queryFn(),
+    },
+  },
+});
+convexQueryClient.connect(queryClient);
 
 export default function ConvexClerkProvider({
   children,
@@ -32,7 +41,6 @@ export default function ConvexClerkProvider({
 }
 
 export function getContext() {
-  const queryClient = new QueryClient()
   return {
     queryClient,
     convex: convexQueryClient.convexClient,

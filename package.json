@@ -12,6 +12,7 @@
     "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^2.0.1",
     "@clerk/backend": "^2.29.0",
     "@clerk/clerk-react": "^5.49.0",
     "@convex-dev/react-query": "0.0.0-alpha.11",
@@ -39,6 +40,7 @@
     "@tiptap/markdown": "^3.14.0",
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
+    "ai": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "convex": "^1.27.3",

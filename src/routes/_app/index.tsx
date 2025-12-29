@@ -4,11 +4,13 @@ import { RawNotesInput } from './-components/raw-notes-input'
 import { GenerateAction } from './-components/generate-action'
 import { EmptyState } from './-components/empty-state'
 import { RecentNotes } from './-components/recent-notes'
-import { recentNotes } from './-mock-data'
+import { useFetchRecentNotes } from '@/queries-and-mutations/notes/note-queries'
+import { RecentNotesSkeleton } from './-components/recent-notes-skeleton'
 
 export const Route = createFileRoute('/_app/')({ component: App })
 
 function App() {
+  const recentNotesQuery = useFetchRecentNotes()
   const [rawInput, setRawInput] = useState('')
 
   return (
@@ -19,7 +21,8 @@ function App() {
           Transform messy notes into clarity
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Paste your rough notes and get a clear, structured explanation that helps you understand and remember.
+          Paste your rough notes and get a clear, structured explanation that
+          helps you understand and remember.
         </p>
       </div>
 
@@ -31,8 +34,10 @@ function App() {
 
       {/* Recent Notes or Empty State */}
       <div className="bg-card border border-border rounded-lg p-6">
-        {recentNotes.length > 0 ? (
-          <RecentNotes notes={recentNotes} />
+        {recentNotesQuery.isLoading ? (
+          <RecentNotesSkeleton />
+        ) : recentNotesQuery.data?.length! > 0 ? (
+          <RecentNotes notes={recentNotesQuery.data!} />
         ) : (
           <EmptyState />
         )}

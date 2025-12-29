@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { Clock, FileText } from 'lucide-react'
-import { Note } from '../-mock-data'
+import { type DataModel } from '@convex/_generated/dataModel'
 
 interface NoteCardProps {
-  note: Note
+  note: DataModel['notes']['document']
 }
 
 export function NoteCard({ note }: NoteCardProps) {
@@ -25,7 +25,7 @@ export function NoteCard({ note }: NoteCardProps) {
   return (
     <Link
       to="/notes/$id"
-      params={{ id: note.id }}
+      params={{ id: note._id }}
       className="block group"
     >
       <div className="bg-card border border-border rounded-lg p-5 hover:bg-accent transition-colors">
@@ -43,7 +43,7 @@ export function NoteCard({ note }: NoteCardProps) {
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
-            <span>{formatDate(note.updatedAt)}</span>
+            <span>{formatDate(new Date(note._creationTime).toISOString())}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <FileText className="h-3.5 w-3.5" />

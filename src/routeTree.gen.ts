@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as AppSettingsIndexRouteImport } from './routes/_app/settings/index'
@@ -30,6 +31,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: '/sign-up',
@@ -60,6 +66,7 @@ const AppNotesIdIndexRoute = AppNotesIdIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/api/ai': typeof ApiAiRoute
   '/': typeof AppIndexRoute
   '/notes': typeof AppNotesIndexRoute
   '/settings': typeof AppSettingsIndexRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/api/ai': typeof ApiAiRoute
   '/': typeof AppIndexRoute
   '/notes': typeof AppNotesIndexRoute
   '/settings': typeof AppSettingsIndexRoute
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
+  '/api/ai': typeof ApiAiRoute
   '/_app/': typeof AppIndexRoute
   '/_app/notes/': typeof AppNotesIndexRoute
   '/_app/settings/': typeof AppSettingsIndexRoute
@@ -89,18 +98,27 @@ export interface FileRouteTypes {
   fullPaths:
     | '/sign-in'
     | '/sign-up'
+    | '/api/ai'
     | '/'
     | '/notes'
     | '/settings'
     | '/notes/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-in' | '/sign-up' | '/' | '/notes' | '/settings' | '/notes/$id'
+  to:
+    | '/sign-in'
+    | '/sign-up'
+    | '/api/ai'
+    | '/'
+    | '/notes'
+    | '/settings'
+    | '/notes/$id'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
+    | '/api/ai'
     | '/_app/'
     | '/_app/notes/'
     | '/_app/settings/'
@@ -110,6 +128,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ApiAiRoute: typeof ApiAiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,6 +153,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_auth/sign-up': {
       id: '/_auth/sign-up'
@@ -208,6 +234,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  ApiAiRoute: ApiAiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

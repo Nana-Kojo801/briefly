@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { Clock } from 'lucide-react'
-import { RecentNote } from '../-mock-data'
+import { type DataModel } from '@convex/_generated/dataModel'
 
 interface RecentNotesProps {
-  notes: RecentNote[]
+  notes: DataModel['notes']['document'][]
 }
 
 export function RecentNotes({ notes }: RecentNotesProps) {
@@ -12,8 +12,10 @@ export function RecentNotes({ notes }: RecentNotesProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     const now = new Date()
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
-    
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+    )
+
     if (diffInHours < 24) return `${diffInHours}h ago`
     if (diffInHours < 48) return 'Yesterday'
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -25,13 +27,13 @@ export function RecentNotes({ notes }: RecentNotesProps) {
         <Clock className="h-4 w-4" />
         <span>Recent notes</span>
       </div>
-      
+
       <div className="space-y-2">
         {notes.map((note) => (
           <Link
-            key={note.id}
+            key={note._id}
             to="/notes/$id"
-            params={{ id: note.id }}
+            params={{ id: note._id }}
             className="block rounded-lg border border-border bg-card p-3 hover:bg-accent transition-colors"
           >
             <h4 className="text-sm font-medium mb-1 line-clamp-1">
@@ -41,7 +43,7 @@ export function RecentNotes({ notes }: RecentNotesProps) {
               {note.preview}
             </p>
             <span className="text-xs text-muted-foreground">
-              {formatDate(note.updatedAt)}
+              {formatDate(new Date(note._creationTime).toISOString())}
             </span>
           </Link>
         ))}

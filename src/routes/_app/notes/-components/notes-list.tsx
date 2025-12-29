@@ -1,15 +1,12 @@
 import { NoteCard } from './note-card'
-import { Note } from '../-mock-data'
+import { useSuspenseFetchNotes } from '@/queries-and-mutations/notes/note-queries'
 
-interface NotesListProps {
-  notes: Note[]
-}
-
-export function NotesList({ notes }: NotesListProps) {
+export function NotesList() {
+  const { data: notes } = useSuspenseFetchNotes()
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {notes.map((note) => (
-        <NoteCard key={note.id} note={note} />
+        <NoteCard key={note._id} note={note} />
       ))}
     </div>
   )
